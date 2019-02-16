@@ -7,53 +7,57 @@ class block{
         this.data = data;
         this.prevHash = prevHash;
         this.hash = this.calculateHash();
-        this.nonus=0
+        this.nonce = 0;
     }
+
     calculateHash(){
-        return SHA256(this.index + this.prevHash + this.timestamp + this.data + this.nonus).toString();
+        return SHA256(this.index + this.prevHash + this.timestamp + JSON.stringify(this.data) + this.nonce).toString();
     }
-    mineBlock(difficulty){
-        while(this.hash.substring(0,difficulty) !== Array(difficulty + 1).join("0")){
-            nonus++;
-            this.hash = this.calculateHash();
+
+    mainBlock(diff){
+        while(this.hash.substring(0, diff) !== Array(diff + 1).join("0")){
+            this.nonce++;
+            this.hash=this.calculateHash();
         }
-        console.log("Block mined: " + this.hash);
+        console.log("block mined"+ this.hash); 
     }
 }
+
 
 class blockchain{
     constructor(){
         this.chain = [this.createGenesisBlock()];
-        this.difficulty=4;
     }
 
     createGenesisBlock(){
         return new block(0, "01/01/2019", "Frist Block", "0000000000000000000000000000000000000000");
     }
+
     getLatestBlock(){
         return this.chain[this.chain.length - 1];
     }
 
     addBlock(newBlock){
         newBlock.prevHash = this.getLatestBlock().hash;
-        newBlock.mineBlock = (this.difficulty);
+        newBlock.mainBlock(4);
         this.chain.push(newBlock);
     }
 }
 
 let HaithamBlock = new blockchain();
-var x=0;
-while (x!=5){
-    x++;
-    var datetime = new Date();
-    HaithamBlock.addBlock(new block(x,datetime,"hello"));
-    HaithamBlock.chain[x].data = x;
-   
-}
+// var x=0;
+// while (x!=5){
+//     x++;
+//     var datetime = new Date();
+//     HaithamBlock.addBlock(new block(x,datetime,"hello"));
+//     HaithamBlock.chain[x].data = x;
+
+// }
 
 
 
-//HaithamBlock.addBlock(new block("11","datetime","hello"));
+HaithamBlock.addBlock(new block("11","datetime","hello"));
+HaithamBlock.addBlock(new block("121","datetime",{amount : 8}));
 
 //HaithamBlock.addBlock(new block(x,datetime,"hello"));
 
