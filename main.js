@@ -45,35 +45,39 @@ class blockchain{
 }
 
 let HaithamBlock = new blockchain();
-// var x=0;
-// while (x!=5){
-//     x++;
-//     var datetime = new Date();
-//     HaithamBlock.addBlock(new block(x,datetime,"hello"));
-//     HaithamBlock.chain[x].data = x;
 
-// }
+var x=0;
+var breakTheLoop = false;
 
+const readline = require('readline');
+    
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+    });
 
+    console.log('Enter ');
+rl.on('line', (line) => {
 
-HaithamBlock.addBlock(new block("11","datetime","hello"));
-HaithamBlock.addBlock(new block("121","datetime",{amount : 8}));
+    x++;
+    var datetime = new Date();
+    HaithamBlock.addBlock(new block(x,datetime,line));
+   
+    
+    rl.prompt();
 
-//HaithamBlock.addBlock(new block(x,datetime,"hello"));
+    console.log(HaithamBlock.chain[x].data);
 
+  }).on('close', () => {
+        console.log('You have stopped, Thank you!');
 
+        y=0;
+        while(y<= 4)
+        {
+            y++;
+            console.log(HaithamBlock.chain[y].data);
+        }
 
-
-console.log(JSON.stringify(HaithamBlock,null,4));
-
-// const readline = require('readline');
-
-// const rl = readline.createInterface({
-//   input: process.stdin,
-//   output: process.stdout
-// });
-
-// rl.question('What do you think of Node.js? ', (answer) => {
-//   console.log('Thank you for your valuable feedback:', answer);
-//   rl.close();
-// });
+        process.exit(0);
+    });
+    
